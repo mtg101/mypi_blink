@@ -1,0 +1,1 @@
+It's just the example 'blink' from the PI PICO VSCOde plugin... but I'm struggling to get everything to work - so let's get this under source control, and here as an example of the cprrect config for real future projects.
