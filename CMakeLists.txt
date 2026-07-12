@@ -16,7 +16,7 @@ else()
     set(USERHOME $ENV{HOME})
 endif()
 set(sdkVersion 2.3.0)
-set(toolchainVersion RISCV_ZCB_RPI_2_3_0_0)
+set(toolchainVersion 15_2_Rel1)
 set(picotoolVersion 2.3.0)
 set(picoVscode ${USERHOME}/.pico-sdk/cmake/pico-vscode.cmake)
 if (EXISTS ${picoVscode})
@@ -39,10 +39,8 @@ add_executable(blink
     blink.c
     )
 
-pico_enable_stdio_uart(blink 1)
-
 # pull in common dependencies
-target_link_libraries(blink pico_stdlib pico_cyw43_arch_none)
+target_link_libraries(blink pico_stdlib)
 
 if (PICO_CYW43_SUPPORTED)
     target_link_libraries(blink pico_cyw43_arch_none)
