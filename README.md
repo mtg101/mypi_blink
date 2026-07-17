@@ -3,3 +3,5 @@ It's just the example 'blink' from the PI PICO VSCOde plugin... but I'm struggli
 Started in RISC-V (as I think it's cool) but seems it has issues starting up the WiFI chip, which is how you flash the on-board LED...
 
 So flipped to ARM and now it basically works out-of-the-box -- but did learn you have to flash an ARM binary before ARM debugger works!
+
+I'm using https://wokwi.com/ to version control my breadboard setup. It's a full simulator, but to start with I'm just using it to save the breadboard setup and display as a diagram. There's a VScode externsion, as you'd expect. The free version you have to write the diagram.json by hand. There's a visual editor but that's $8 a month and I'm just exploring here. 
