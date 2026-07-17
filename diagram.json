@@ -3,24 +3,38 @@
   "author": "AI Collaborator",
   "editor": "wokwi",
   "parts": [
-    { "type": "board-pi-pico-w", "id": "pico", "top": -100, "left": -180, "rotate": 90, "attrs": {} },
     { "type": "wokwi-breadboard-half", "id": "bb1", "top": -120, "left": 80, "attrs": {} },
-    { "type": "wokwi-resistor", "id": "r1", "top": -43, "left": 160, "attrs": { "value": "220" } },
-    { "type": "wokwi-led", "id": "led1", "top": -110, "left": 235, "attrs": { "color": "red" } },
-    { "type": "wokwi-pushbutton", "id": "btn1", "top": 50, "left": 160, "attrs": {} }
+    { "type": "wokwi-resistor", "id": "r1", "top": -34, "left": 355, "rotate": 90,"attrs": { "value": "220" } },
+    { "type": "wokwi-led", "id": "led1", "top": -13, "left": 360, "attrs": { "color": "red" } },
+    { "type": "wokwi-pushbutton", "id": "btn1", "top": -40, "left": 292, "rotate": 90, "attrs": {} },
+    { "type": "board-pi-pico-w", "id": "pico", "top": -116, "left": 163, "rotate": 90, "attrs": {} }
   ],
   "connections": [
-    [ "pico:GP15", "bb1:5t.b", "magenta", [] ],
-    [ "bb1:5t.e", "r1:1", "magenta", [] ],
-    
-    [ "r1:2", "bb1:10t.e", "red", [] ],
-    [ "bb1:10t.a", "led1:A", "red", [] ],
-    [ "led1:C", "bb1:11t.a", "black", [] ],
-    [ "bb1:11t.e", "pico:GND.1", "black", [] ],
+      [ "pico:GP15", "r1:1", "magenta", [] ],
+      [ "led1:C", "pico:GND.1", "black", [] ],
 
-    [ "pico:GP14", "bb1:25t.b", "blue", [] ],
-    [ "bb1:25t.e", "btn1:1.l", "blue", [] ],
-    [ "btn1:2.l", "bb1:27t.e", "black", [] ],
-    [ "bb1:27t.b", "pico:GND.2", "black", [] ]
-  ]
+      [ "pico:GP14", "btn1:1.l", "blue", [] ],
+      [ "btn1:2.l", "pico:GND.2", "black", [] ]
+  ],
+  "spares": {
+    "parts": [
+      { "type": "board-pi-pico-w", "id": "pico", "top": -100, "left": -180, "rotate": 90, "attrs": {} },
+      { "type": "wokwi-breadboard-half", "id": "bb1", "top": -120, "left": 80, "attrs": {} },
+      { "type": "wokwi-resistor", "id": "r1", "top": -43, "left": 160, "attrs": { "value": "220" } },
+      { "type": "wokwi-led", "id": "led1", "top": -110, "left": 235, "attrs": { "color": "red" } },
+      { "type": "wokwi-pushbutton", "id": "btn1", "top": 50, "left": 160, "attrs": {} }
+    ],
+    "connections": [
+      
+      [ "r1:2", "bb1:10t.e", "red", [] ],
+      [ "bb1:10t.a", "led1:A", "red", [] ],
+      [ "led1:C", "bb1:11t.a", "black", [] ],
+      [ "bb1:11t.e", "pico:GND.1", "black", [] ],
+
+      [ "pico:GP14", "bb1:25t.b", "blue", [] ],
+      [ "bb1:25t.e", "btn1:1.l", "blue", [] ],
+      [ "btn1:2.l", "bb1:27t.e", "black", [] ],
+      [ "bb1:27t.b", "pico:GND.2", "black", [] ]
+    ]
+  }
 }
