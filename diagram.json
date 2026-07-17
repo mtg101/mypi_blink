@@ -3,7 +3,7 @@
   "author": "AI Collaborator",
   "editor": "wokwi",
   "parts": [
-    { "type": "board-pi-pico-w", "id": "pico", "top": -100, "left": -180, "attrs": {} },
+    { "type": "board-pi-pico-w", "id": "pico", "top": -100, "left": -180, "rotate": 90, "attrs": {} },
     { "type": "wokwi-breadboard-half", "id": "bb1", "top": -120, "left": 80, "attrs": {} },
     { "type": "wokwi-resistor", "id": "r1", "top": -43, "left": 160, "attrs": { "value": "220" } },
     { "type": "wokwi-led", "id": "led1", "top": -110, "left": 235, "attrs": { "color": "red" } },

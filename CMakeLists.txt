@@ -43,7 +43,7 @@ add_executable(blink
 target_link_libraries(blink pico_stdlib)
 
 if (PICO_CYW43_SUPPORTED)
-    target_link_libraries(blink pico_cyw43_arch_none)
+    target_link_libraries(blink pico_cyw43_arch_none pico_stdlib)
 endif()
 
 # create map/bin/hex file etc.

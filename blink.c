@@ -4,7 +4,11 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pico/stdlib.h"
+#include "pico/stdlib.h"    // VSCode will red squiggle underline this (and how two errors in 'prblems' tab) 
+                            //  but that's just vscode not getting the weird .pico_sdk setup
+
+#include <stdio.h>      // printf() and friends
+
 
 // Pico W devices use a GPIO on the WIFI chip for the LED,
 // so when building for Pico W, CYW43_WL_GPIO_LED_PIN will be defined
@@ -50,4 +54,6 @@ int main() {
         pico_set_led(false);
         sleep_ms(LED_DELAY_MS);
     }
+
+    printf("How did we get here?");
 }
