@@ -46,6 +46,7 @@ void pico_set_led(bool led_on) {
 }
 
 int main() {
+    stdio_init_all();
     int rc = pico_led_init();
     hard_assert(rc == PICO_OK);
     while (true) {
