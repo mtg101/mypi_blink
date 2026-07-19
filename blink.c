@@ -4,8 +4,9 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "pico/stdlib.h"    // VSCode will red squiggle underline this (and how two errors in 'prblems' tab) 
-                            //  but that's just vscode not getting the weird .pico_sdk setup
+// VSCode will red squiggle underline these (and have errors in the problem tab) 
+//  but that's just vscode not getting the weird .pico_sdk setup
+#include "pico/stdlib.h"    
 #include "hardware/gpio.h"
 #include "hardware/sync.h"
 
@@ -129,6 +130,4 @@ int main() {
     while (true) {
         __wfi(); // Wait For Interrupt - puts the CPU into a low-power sleep state
     }
-
-    printf("How did we get here?\n");
 }
