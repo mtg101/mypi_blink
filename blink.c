@@ -6,6 +6,8 @@
 
 #include "pico/stdlib.h"    // VSCode will red squiggle underline this (and how two errors in 'prblems' tab) 
                             //  but that's just vscode not getting the weird .pico_sdk setup
+#include "hardware/gpio.h"
+#include "hardware/sync.h"
 
 #include <stdio.h>      // printf() and friends
 
@@ -16,10 +18,6 @@
 #include "pico/cyw43_arch.h"
 #endif
 
-#ifndef LED_DELAY_MS
-#define LED_DELAY_MS 250
-#endif
-
 // Define the GPIO pins based on your breadboard layout
 // these are gpIO numbers, not index of pins on chip, so led gp15 is bottom pin left hand size
 #define BUTTON_PIN 14
@@ -27,7 +25,7 @@
 
 // Perform initialisation
 int pico_led_init(void) {
-    printf("Init onboard LED");
+    printf("Init onboard LED...\n");
 
 #if defined(PICO_DEFAULT_LED_PIN)
     // A device like Pico that uses a GPIO for the LED will define PICO_DEFAULT_LED_PIN
@@ -41,8 +39,8 @@ int pico_led_init(void) {
 #endif
 }
 
-// Turn the led on or off
-void pico_set_led(bool led_on) {
+// Turn the internal led on or off
+void pico_set_internal_led(bool led_on) {
 #if defined(PICO_DEFAULT_LED_PIN)
     // Just set the GPIO on or off
     gpio_put(PICO_DEFAULT_LED_PIN, led_on);
@@ -52,15 +50,21 @@ void pico_set_led(bool led_on) {
 #endif
 }
 
-void blink_led() {
-        pico_set_led(true);
-        sleep_ms(LED_DELAY_MS);
-        pico_set_led(false);
-        sleep_ms(LED_DELAY_MS);
+// Timer Interrupt Callback Routine (Hardware Timer Interrupt)
+bool repeating_timer_callback(struct repeating_timer *t) {
+    // Keep track of the internal LED state between function calls
+    static bool internal_led_state = false;
+    
+    // Toggle the state and write it to the pin
+    internal_led_state = !internal_led_state;
+    pico_set_internal_led(internal_led_state);
+    
+    // Returning true tells the SDK to automatically schedule the next 250ms alarm
+    return true; 
 }
 
 void init_buttons() {
-    printf("Init buttons...");
+    printf("Init buttons...\n");
 
     // Configure the LED pin as an Output
     gpio_init(LED_PIN);
@@ -72,28 +76,59 @@ void init_buttons() {
     gpio_pull_up(BUTTON_PIN);       // 'pull up' adds a resistor so when not connected it's not floating (is 1 instead)
 }
 
-void button_led() {
-    // Read the current state of the button pin
-    // Since we use a pull-up, gpio_get returns 0 (false) when pressed!
-    if (gpio_get(BUTTON_PIN) == 0) {
-        gpio_put(LED_PIN, 1);  // Turn LED ON
-    } else {
-        gpio_put(LED_PIN, 0);  // Turn LED OFF
-    }
+bool led_state = false;      // Tracks whether the LED should be on or off
+volatile uint32_t last_interrupt_time = 0;
 
-    // Small delay to prevent the CPU from spinning at 100% capacity
-    sleep_ms(10);
+void button_led() {
+    // Toggle the state variable
+    led_state = !led_state; 
+
+    if(led_state) {
+        printf("Light goes on\n");
+    } else {
+        printf("Light goes off\n");
+    }
+    
+    // Apply the new state to the physical LED pin
+    gpio_put(LED_PIN, led_state);
 }
 
+
+// Interrupt Service Routine (ISR)
+void button_isr_handler(uint gpio, uint32_t events) {
+    // Basic hardware debouncing: check time elapsed since last interrupt
+    uint32_t current_time = to_ms_since_boot(get_absolute_time());
+    
+    // Only trigger if 50ms have passed since the last bounce noise
+    if (current_time - last_interrupt_time > 50) {
+        // Toggle the state
+        button_led();
+        
+        last_interrupt_time = current_time;
+    }
+}
 int main() {
     stdio_init_all();
     int rc = pico_led_init();
     hard_assert(rc == PICO_OK);
     init_buttons();
+
+    // Configure the interrupt: trigger on the falling edge (when button goes 1 -> 0)
+    gpio_set_irq_enabled_with_callback(
+        BUTTON_PIN, 
+        GPIO_IRQ_EDGE_FALL, 
+        true, 
+        &button_isr_handler
+    );
+
+    // Configure the Hardware Timer Interrupt (1000ms interval)
+    struct repeating_timer timer;
+    add_repeating_timer_ms(1000, repeating_timer_callback, NULL, &timer);
+
+    // The main loop can now sit completely idle or process other tasks!
     while (true) {
-        // blink_led(); waits in tight loopp doesn't work with button reading...
-        button_led();
+        __wfi(); // Wait For Interrupt - puts the CPU into a low-power sleep state
     }
 
-    printf("How did we get here?");
+    printf("How did we get here?\n");
 }
