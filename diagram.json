@@ -35,8 +35,8 @@
 
       [ "pico2:GP15", "r2:2", "magenta", [] ],
       [ "r2:1", "led2:A", "magenta", [] ],
-      [ "led2:C", "pico2:GND.2", "black", [] ],
+      [ "led2:C", "pico2:GND.3", "black", [] ],
       [ "pico2:GP14", "btn2:1.l", "blue", [] ],
-      [ "btn2:2.l", "pico2:GND.3", "black", [] ]
+      [ "btn2:2.l", "pico2:GND.2", "black", [] ]
   ]
 }
