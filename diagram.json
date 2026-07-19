@@ -8,8 +8,10 @@
     { "type": "wokwi-led", "id": "led1", "top": -13, "left": 360, "attrs": { "color": "red" } },
     { "type": "wokwi-pushbutton", "id": "btn1", "top": -40, "left": 292, "rotate": 90, "attrs": {} },
     { "type": "board-pi-pico-w", "id": "pico1", "top": -116, "left": 163, "rotate": 90, "attrs": {} },
-    { "type": "wokwi-text", "id": "label-pwr", "top": -150, "left": 100, "attrs": { "text": "On Breadboard" } },
+    { "type": "wokwi-text", "id": "label-pwr", "top": -170, "left": 100, "attrs": { "text": "On Breadboard" } },
 
+    { "type": "wokwi-text", "id": "label-pwr", "top": -100, "left": -100, "attrs": { "text": "PICO\nPI\nDebug\n(fake pins UART)" } },
+    { "type": "board-pi-pico-w", "id": "picod", "top": 0, "left": -100, "rotate": 0, "attrs": {} },
 
     { "type": "wokwi-resistor", "id": "r2", "top": 234, "left": 260, "rotate": 90, "attrs": { "value": "220" } },
     { "type": "wokwi-led", "id": "led2", "top": 100, "left": 260, "attrs": { "color": "red" } },
@@ -19,14 +21,22 @@
  ],
   "connections": [
       [ "pico1:GP15", "r1:1", "magenta", ["v-30", "h0"] ],
-      [ "led1:C", "pico1:GND.1", "black", ["v-100", "h0"] ],
+      [ "led1:C", "pico1:GND.2", "black", ["v-100", "h0"] ],
       [ "pico1:GP14", "btn1:1.l", "blue", ["v-15", "h0"] ],
-      [ "btn1:2.l", "pico1:GND.2", "black", ["v-10", "h0"] ],
+      [ "btn1:2.l", "pico1:GND.3", "black", ["v-10", "h0"] ],
+
+      [ "picod:GND.1", "pico1:GND.1", "black", ["h-50", "v-150", "h0"] ],
+      [ "picod:GP1", "pico1:GP1", "orange", ["h-40", "v-150", "h0"] ],
+      [ "picod:GP0", "pico1:GP0", "yellow", ["h-30", "v-150", "h0"] ],
+
+      [ "pico2:GND.1", "picod:GND.5", "black", [] ],
+      [ "pico2:GP1", "picod:GP18", "orange", [] ],
+      [ "pico2:GP0", "picod:GP19", "yellow", [] ],
 
       [ "pico2:GP15", "r2:2", "magenta", [] ],
       [ "r2:1", "led2:A", "magenta", [] ],
-      [ "led2:C", "pico2:GND.1", "black", [] ],
+      [ "led2:C", "pico2:GND.2", "black", [] ],
       [ "pico2:GP14", "btn2:1.l", "blue", [] ],
-      [ "btn2:2.l", "pico2:GND.2", "black", [] ]
+      [ "btn2:2.l", "pico2:GND.3", "black", [] ]
   ]
 }
