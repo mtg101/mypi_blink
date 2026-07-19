@@ -1,0 +1,30 @@
+{
+    "configurations": [
+        {
+            "name": "Pico",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "C:/Users/Vulkyn/.pico-sdk/sdk/2.3.0/src/common/**",
+                "C:/Users/Vulkyn/.pico-sdk/sdk/2.3.0/src/common/**/include",                
+                "C:/Users/Vulkyn/.pico-sdk/sdk/2.3.0/src/rp2_common/**",
+                "C:/Users/Vulkyn/.pico-sdk/sdk/2.3.0/src/rp2_common/**/include",
+                "C:/Users/Vulkyn/.pico-sdk/sdk/2.3.0/src/rp2_common/pico_cyw43_arch/include",
+                "C:/Users/Vulkyn/.pico-sdk/sdk/2.3.0/src/rp2_common/pico_lwip/include",
+                "C:/Users/Vulkyn/.pico-sdk/sdk/2.3.0/lib/lwip/src/include/**",
+                "C:/Users/Vulkyn/.pico-sdk/sdk/2.3.0/lib/cyw43-driver/src",
+                "C:/Users/Vulkyn/.pico-sdk/sdk/2.3.0/src/rp2350/**",
+                "C:/Users/Vulkyn/.pico-sdk/sdk/2.3.0/src/rp2350/**/include"                
+            ],
+            "defines": [
+                "PICO_BOARD=\"pico2\"",
+                "PICO_ON_DEVICE=1",
+                "LIB_PICO_STDIO=1"
+            ],
+            "compilerPath": "C:/Users/Vulkyn/.pico-sdk/toolchain/15_2_Rel1/bin/arm-none-eabi-gcc.exe",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "gcc-arm"
+        }
+    ],
+    "version": 4
+}
