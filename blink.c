@@ -100,8 +100,8 @@ void button_isr_handler(uint gpio, uint32_t events) {
     // Basic hardware debouncing: check time elapsed since last interrupt
     uint32_t current_time = to_ms_since_boot(get_absolute_time());
     
-    // Only trigger if 50ms have passed since the last bounce noise
-    if (current_time - last_interrupt_time > 50) {
+    // Only trigger if 250ms have passed since the last bounce noise
+    if (current_time - last_interrupt_time > 250) {
         // Toggle the state
         button_led();
         
